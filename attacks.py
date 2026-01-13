@@ -70,11 +70,14 @@ def TapTap(params = {}):
             Position(p)
             t.sleep(0.75)
     t.sleep(1)
+
+    # troops
     Slot(1)
     for i in range (4):
-        for x in range(3):
-            for y in range(10):
-                Position(y)
+        # 3 tap per position
+        for pos in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+            for i in range(3):
+                Position(pos)
                 t.sleep(0.1)
         t.sleep(2)
 
