@@ -11,17 +11,15 @@
 - **Autonomous Loot Farm:**  
   The main bot (`Bot.py`) automatically searches for bases with high loot, attacks them, and repeats the process. It uses OCR to read loot values and only attacks when thresholds are met.
 
-- **Fake Legends League Option:**  
-  stays within set trophie range (4930-4970) so you get legends leuge bonus while having unlimited attacks.
-
 ## How to Use
 
 1. **Install Requirements:**  
    - Python 3
+   - Install required Python libraries: `pip install -r requirements.txt`
 
 2. **Configure Emulator:**  
    - Ensure Android emulator is running and accessible via ADB (`platform-tools`).
-   - set adb port in the `attacks.py` file
+   - Set the ADB port in the `attacks.py` file.
 
 3. **Run the Bot:**  
    - For main base farming:  
@@ -32,8 +30,9 @@
 4. **Customise Attacks:**  
    - Edit `attacktype` in `Bot.py` or add new strategies in `attacks.py`.
 
-5. **Fake Legends League:**  
-   - Set `trophiebypass = False` in `Bot.py` to enable.
+5. **Dynamic Target Configuration:**  
+   - Use the GUI to dynamically set loot targets, troop slots, hero slots, and spell slots.  
+   - Enable or disable specific loot targets (Gold, Elixir, Dark Elixir) directly from the GUI.
 
 ## Files
 
