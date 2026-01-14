@@ -39,32 +39,48 @@ def Slot(n):  # tap on slot n
 
 # attack types
 def TapTap(params = {}):
-    # workshop
-    Slot(2) 
-    Position(10)
-    t.sleep(1) 
-
-    # heroes 1
-    Slot(3) 
-    Position(10)
-    t.sleep(1)
-
-    # heroes 2
-    Slot(4) 
-    Position(10)
-    t.sleep(1)
-
-    # heroes 3
-    # Slot(5) 
-    # Position(10)
-    # t.sleep(1)
-
-    hero_slots = params.get("heroes_slots", 0)
     troop_slots = params.get("troop_slots", 0)
-    spell_slot_counter = troop_slots + hero_slots + 2
+    workshop_slots = params.get("workshop_slots", 1)
+    hero_slots = params.get("heroes_slots", 0)
+
+    spell_slot_position = troop_slots + workshop_slots + hero_slots + 1
+    hero_slot_1_position = troop_slots + workshop_slots + 1
+    hero_slot_2_position = troop_slots + workshop_slots + 2
+    hero_slot_3_position = troop_slots + workshop_slots + 3
+    hero_slot_4_position = troop_slots + workshop_slots + 4
+
+    if workshop_slots >= 1:
+        # workshop
+        Slot(2) 
+        Position(10)
+        t.sleep(1)
+
+    if hero_slots >= 1:
+        # heroes 1
+        Slot(hero_slot_1_position) 
+        Position(10)
+        t.sleep(1)
+    
+    if hero_slots >= 2:
+        # heroes 2
+        Slot(hero_slot_2_position) 
+        Position(10)
+        t.sleep(1)
+    
+    if hero_slots >= 3:
+        # heroes 3
+        Slot(hero_slot_3_position) 
+        Position(10)
+        t.sleep(1)
+    
+    if hero_slots >= 4:
+        # heroes 4
+        Slot(hero_slot_4_position) 
+        Position(10)
+        t.sleep(1)
 
     # spell
-    Slot(spell_slot_counter) 
+    Slot(spell_slot_position) 
     for p in ['c1','c2','c3']:
         for x in range(4):
             Position(p)
