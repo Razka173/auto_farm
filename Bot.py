@@ -3,6 +3,11 @@ import customtkinter as ctk
 import func as f
 import threading
 import attacks as a
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 trophiebypass = True
 attacktype = "TapTap"
@@ -15,7 +20,8 @@ gold_remaining = 50000
 elixir_remaining = 50000
 dark_elixir_remaining = 50
 
-p  = str(a.p) # port
+# Fetch port from environment variable or use default from attacks.py
+p  = os.getenv("BOT_PORT", '5555')  # Default to the value from attacks.py if BOT_PORT is not set
 bot_thread = None
 bot_running = threading.Event()
 
@@ -76,7 +82,7 @@ def Bot():
             app.log("base found: " +  format(int(f.check_loot.result[0]), ",") + " Gold   " + format(int(f.check_loot.result[1]), ",") + " Elixir   " +  format(int(f.check_loot.result[2]), ",") + " Dark Elixir")
             app.log("loot below target, going to next base")
             f.next(p)
-            t.sleep(5)
+            t.sleep(6)
             f.check_loot(p) # recursive loot check
 
         # attack state
@@ -91,23 +97,24 @@ def Bot():
             return
         
         # check loot during attack
-        app.log("checking loot during attack")
-        f.check_loot(p)
-        recurring = 0
-        while (
-            int(f.check_loot.result[0]) > gold_remaining and 
-            int(f.check_loot.result[1]) > elixir_remaining and 
-            int(f.check_loot.result[2]) > dark_elixir_remaining
-        ) and bot_running.is_set():
-            # if loot is still above remaining threshold, continue attack
-            t.sleep(2)
+        if bot_running.is_set():
+            app.log("checking loot during attack")
             f.check_loot(p)
-            recurring += 1
-            if recurring >= 3:
-                return_home = f.check_return_home(p)
-                app.log("return home check: " + str(return_home))
-                if return_home == True:
-                    break
+            recurring = 0
+            while (
+                int(f.check_loot.result[0]) > gold_remaining and 
+                int(f.check_loot.result[1]) > elixir_remaining and 
+                int(f.check_loot.result[2]) > dark_elixir_remaining
+            ) and bot_running.is_set():
+                # if loot is still above remaining threshold, continue attack
+                t.sleep(2)
+                f.check_loot(p)
+                recurring += 1
+                if recurring >= 3:
+                    return_home = f.check_return_home(p)
+                    app.log("return home check: " + str(return_home))
+                    if return_home == True:
+                        break
 
         app.log("stopping attack, returning to base")
         if bot_running.is_set():
@@ -120,11 +127,11 @@ def Bot():
 
 #################################################################################################### 
 # Create main window
-class CoCBotApp:
+class ClashOfClansBotApp:
     def __init__(self):
         self.App = ctk.CTk()
         self.App.title("Otomatisasi Robot CoC")
-        self.App.geometry("600x500")  # Adjusted height for new fields
+        self.App.geometry("720x600")  # Adjusted height for new fields
 
         # Button frame
         self.App.button_frame = ctk.CTkFrame(self.App)
@@ -200,17 +207,17 @@ class CoCBotApp:
         # Troop and Heroes Slots
         ctk.CTkLabel(self.App.target_frame, text="Troop Slot(s):").grid(row=3, column=0, padx=10, pady=5, sticky="w")  # Increased padding
         self.troop_slots_entry = ctk.CTkEntry(self.App.target_frame)
-        self.troop_slots_entry.insert(0, "0")  # Default value
+        self.troop_slots_entry.insert(1, "1")  # Default value
         self.troop_slots_entry.grid(row=3, column=1, padx=10, pady=5)  # Increased padding
 
         ctk.CTkLabel(self.App.target_frame, text="Heroes Slot(s):").grid(row=4, column=0, padx=10, pady=5, sticky="w")  # Increased padding
         self.heroes_slots_entry = ctk.CTkEntry(self.App.target_frame)
-        self.heroes_slots_entry.insert(0, "0")  # Default value
+        self.heroes_slots_entry.insert(1, "1")  # Default value
         self.heroes_slots_entry.grid(row=4, column=1, padx=10, pady=5)  # Increased padding
 
         ctk.CTkLabel(self.App.target_frame, text="Spell Slot(s):").grid(row=5, column=0, padx=10, pady=5, sticky="w")  # Increased padding
         self.spell_slots_entry = ctk.CTkEntry(self.App.target_frame)
-        self.spell_slots_entry.insert(0, "0")  # Default value
+        self.spell_slots_entry.insert(1, "1")  # Default value
         self.spell_slots_entry.grid(row=5, column=1, padx=10, pady=5)  # Increased padding
 
     def toggle_gold_target(self):
@@ -256,7 +263,9 @@ class CoCBotApp:
     def run(self):
         self.App.mainloop()
 
+cls_clash_of_clans_bot_app = ClashOfClansBotApp()
+
 # Instantiate and run the application
 if __name__ == "__main__":
-    app = CoCBotApp()
+    app = cls_clash_of_clans_bot_app
     app.run()
