@@ -3,3 +3,5 @@ python-dotenv
 Pillow
 easyocr
 pure-python-adb
+numpy
+opencv-python
