@@ -2,3 +2,4 @@ Pictures/*.png
 *.pyc
 venv/
 __pycache__/
+.env
