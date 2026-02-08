@@ -1,7 +1,12 @@
 import func as f
 import time as t
+import os
+from dotenv import load_dotenv
 
-p = '5554' # port
+# Load environment variables from .env file
+load_dotenv()
+
+p = os.getenv("BOT_PORT", '5555') # port
 
 def Position(n):
     if n == 1:
