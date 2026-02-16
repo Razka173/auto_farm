@@ -9,7 +9,7 @@
   Includes a dedicated Builder Base bot (`builderbot.py`) for automating attacks in the Builder Base. The bot  executes attacks, and returns home automatically.
 
 - **Autonomous Loot Farm:**  
-  The main bot (`Bot.py`) automatically searches for bases with high loot, attacks them, and repeats the process. It uses OCR to read loot values and only attacks when thresholds are met.
+  The main bot (`main.py`) automatically searches for bases with high loot, attacks them, and repeats the process. It uses OCR to read loot values and only attacks when thresholds are met.
 
 ## How to Use
 
@@ -23,9 +23,7 @@
 
 3. **Run the Bot:**  
    - For main base farming:  
-     `python Bot.py`
-   - For Builder Base farming:  
-     `python builderbot.py`
+     `python main.py`
 
 4. **Customise Attacks:**  
    - Edit `attacktype` in `Bot.py` or add new strategies in `attacks.py`.
@@ -36,8 +34,7 @@
 
 ## Files
 
-- `Bot.py` — Main loot farming bot with GUI.
-- `builderbot.py` — Builder Base attack automation bot.
+- `main.py` — Main loot farming bot with GUI.
 - `attacks.py` — Contains all attack strategies.
 - `func.py` — Utility functions for screen interaction and OCR.
 
